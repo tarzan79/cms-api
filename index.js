@@ -33,13 +33,16 @@ app.use(bodyParser.urlencoded({
 app.use(cors());
 
 const init = async () => {
-  let route = require("./routes/index")(app); // c'est la qu'on charge les routes de l'api
+  let route = require("./v1/routes/index")(app); // c'est la qu'on charge les routes de l'api
+  let init = require('./v1/controllers/node')
+  init.init()
+
   let port = app.config.server.port || 5000
   let host = app.config.server.host || "0.0.0.0"
   /** server start */
   app.listen(port, host, () => {
     console.log("Serveur démarré avec succes");
-    console.log("=> url: " + host + ":" + port);
+    console.log("=> url: " + host + ":" + port + "/api/v" + config.version);
     //console.log(db.models);
   });
 }

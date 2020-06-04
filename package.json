@@ -11,12 +11,12 @@
   "author": "severin",
   "license": "ISC",
   "scripts": {
-    "start": "nodemon index.js",
-    "build": "node client/build/build.js",
+    "start-dev": "nodemon index.js",
+    "start": "node index.js",
     "dev-install": "npm install && cd client && npm install"
   },
   "dependencies": {
-    "argon2-ffi": "^1.2.0",
+    "argon2": "^0.26.2",
     "aws-sdk": "^2.671.0",
     "axios": "^0.18.1",
     "commander": "^2.19.0",
@@ -31,11 +31,12 @@
     "inquirer": "^6.2.0",
     "jsonwebtoken": "^8.4.0",
     "mongoose": "^5.9.10",
+    "mongoose-gen": "^2.1.1",
     "morgan": "^1.9.1"
   },
   "engines": {
-    "node": ">= 6.0.0",
-    "npm": ">= 3.0.0"
+    "node": ">= 12.16.3",
+    "npm": ">= 6.14.4"
   },
   "browserslist": [
     "> 1%",

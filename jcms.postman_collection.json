@@ -1,0 +1,899 @@
+{
+	"info": {
+		"_postman_id": "f2ed02e3-98bf-4dc9-8fcd-1e96ca0b9fec",
+		"name": "jcms",
+		"description": "# Introduction\nl'api permet de gérer le cms avec n'importe quel type de client\n\nPour les requêtes qui demande un **rôle**, il suffit d'avoir l'un des rôles de la liste (ou le rôle s'il y n'y en a qu'un seul) pour pouvoir acceder à la ressource. Bien que les rôles ai une hierarchie, il ne suffit que d'un seul rôle",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "connexion",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "zzz@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "azazaz123",
+									"type": "text"
+								}
+							],
+							"options": {
+								"urlencoded": {}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth"
+							]
+						},
+						"description": "Permet de se connecter grâce à un identifiant et un mot de passe, renvoie un jeton qui permet d'accéder aux ressources protégés.\n\nIl doit donc être reutilisé pour toute les prochaines requetes qui demande d'etre identifié."
+					},
+					"response": []
+				},
+				{
+					"name": "deconnexion",
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"type": "text",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJpYXQiOjE1NDU5Njc4Mjl9.myZNiGnhpl3ID57NbK0appJMgqD82ypzyDCbjc9WVko"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/users/logout",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"logout"
+							]
+						},
+						"description": "Déconnecte un utilisateur (principalement pour se déconnecter soi-même)"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "liste utilisateur",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJpYXQiOjE1ODg5OTY2NDJ9.RGSrHqSzcCoGgV1zjOPfMxDC6n3cZsNOekZxtOUChqQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [],
+							"options": {
+								"urlencoded": {}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								""
+							]
+						},
+						"description": "Récupère l'ensemble des utilisateurs\n\n* **role:** admin\n* **token:** true"
+					},
+					"response": []
+				},
+				{
+					"name": "inscription",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "zzz",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "zzz@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "azazaz123",
+									"type": "text"
+								},
+								{
+									"key": "confirm",
+									"value": "azazaz123",
+									"type": "text"
+								}
+							],
+							"options": {
+								"urlencoded": {}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								""
+							]
+						},
+						"description": "Inscrit un nouvel utilisateur"
+					},
+					"response": []
+				},
+				{
+					"name": "info perso",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{url}}/users/info",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"info"
+							]
+						},
+						"description": "Retourne les info de l'utilisateur courant\n* **role:** self\n* **token:** true"
+					},
+					"response": []
+				},
+				{
+					"name": "info utilisateur",
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users/5cbb89e7e1a7c92d406be763",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"5cbb89e7e1a7c92d406be763"
+							]
+						},
+						"description": "Retourne les informations d'un utilisateur\n* **role:** admin\n* **token:** true"
+					},
+					"response": []
+				},
+				{
+					"name": "modifier utilisateur",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "bbb",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "aaa@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "azerty123",
+									"type": "text"
+								},
+								{
+									"key": "confirm",
+									"value": "azerty123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/users/5cbb89e7e1a7c92d406be763",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"5cbb89e7e1a7c92d406be763"
+							]
+						},
+						"description": "Modifie les informations d'un utilisateur\n* **role:** self, admin\n* **token:** true"
+					},
+					"response": []
+				},
+				{
+					"name": "supprimer utilisateur",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJpYXQiOjE1ODg5OTY2NDJ9.RGSrHqSzcCoGgV1zjOPfMxDC6n3cZsNOekZxtOUChqQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users/5cbb91f9d1e6ef2e60a82525",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"5cbb91f9d1e6ef2e60a82525"
+							]
+						},
+						"description": "Supprime un utilisateur\n* **role:** self, admin\n* **token:** true"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Page",
+			"item": [
+				{
+					"name": "liste",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [],
+							"options": {
+								"urlencoded": {}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/pages",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"pages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "trouver par id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/pages/5cbb92b41fd52a2374ad295c",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"pages",
+								"5cbb92b41fd52a2374ad295c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "title",
+									"value": "test",
+									"type": "text"
+								}
+							],
+							"options": {
+								"urlencoded": {}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/pages/search",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"pages",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "créer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "azazaz",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "azadzefze",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "c'est un test",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "voici le contenu du test",
+									"type": "text"
+								},
+								{
+									"key": "author",
+									"value": "dieu",
+									"type": "text"
+								},
+								{
+									"key": "creationDate",
+									"value": "hier",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/pages/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"pages",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "mettre à jour",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "title",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "test update",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "voici le contenu du test",
+									"type": "text"
+								},
+								{
+									"key": "author",
+									"value": "dieu",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/pages/5cbb92b41fd52a2374ad295c",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"pages",
+								"5cbb92b41fd52a2374ad295c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "supprimer",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/pages/5cbb92b41fd52a2374ad295c",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"pages",
+								"5cbb92b41fd52a2374ad295c"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Node",
+			"item": [
+				{
+					"name": "liste des noeuds",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{url}}/nodes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"nodes"
+							]
+						},
+						"description": "Liste les noeuds"
+					},
+					"response": []
+				},
+				{
+					"name": "trouver par id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/nodes/5c92b216851e1c2df8bc1b9f",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"nodes",
+								"5c92b216851e1c2df8bc1b9f"
+							]
+						},
+						"description": "Trouve un noeud par son id"
+					},
+					"response": []
+				},
+				{
+					"name": "créer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "about",
+									"type": "text"
+								},
+								{
+									"key": "model",
+									"value": "\"{}\"",
+									"description": "schema comptatible\n avec mongoose",
+									"type": "text"
+								}
+							],
+							"options": {
+								"urlencoded": {}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/nodes/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"nodes",
+								""
+							]
+						},
+						"description": "Créer un nouveau noeud"
+					},
+					"response": []
+				},
+				{
+					"name": "mettre à jour",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "title",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "test update",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "voici le contenu du test",
+									"type": "text"
+								},
+								{
+									"key": "author",
+									"value": "dieu",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/nodes/5c26f04eed3eff33bcfc2b24",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"nodes",
+								"5c26f04eed3eff33bcfc2b24"
+							]
+						},
+						"description": "Modifie un noeud"
+					},
+					"response": []
+				},
+				{
+					"name": "supprimer",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/nodes/5c28179ab1ce0a3350733110",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"nodes",
+								"5c28179ab1ce0a3350733110"
+							]
+						},
+						"description": "Supprime un noeud"
+					},
+					"response": []
+				},
+				{
+					"name": "liste element noeud",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Un noeud represente une donnée,\n\npar exemple pour un model d'article, un noeud article ressemblerait à ca\n\t{\n\t\ttitle: \"le titre\",\n\t\tcontenu: \"le contenu\"\n\t}\n\t\nvous pouvez donc créer, modifier, supprimer, et relier des noeuds entre eux pour créer une architecture de données\n",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d7c7c83a-e732-4c31-af03-620733ca814b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "f17e52aa-c465-41cd-8c06-b97dc15e7479",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Role",
+			"item": [
+				{
+					"name": "liste",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/roles",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "trouver par id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/roles/{{id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"roles",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "créer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/roles",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "mettre a jour",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/roles/{{id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"roles",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "supprimer",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/roles/{{id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"roles",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "test",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/test",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"test"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "3efefcce-ec4c-471e-b4e3-3da489638464",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "3519fa99-fbd9-49b8-b48a-f8fbd6e0b353",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

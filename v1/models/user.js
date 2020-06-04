@@ -1,4 +1,4 @@
-const db = require('../lib/db');
+const db = require('../../lib/db');
 
 const UserSchema = new db.Schema({
     username: { type: String, required: true },

@@ -4,12 +4,12 @@
 
   "server": {
     "host": "0.0.0.0",
-    "port": "3000",
+    "port": "7000",
     "version": "1"
   },
   "api": {
     "host": "0.0.0.0",
-    "port": "3000",
+    "port": "7000",
     "url": "api",
     "version": "1"
   },

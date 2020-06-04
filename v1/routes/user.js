@@ -27,6 +27,11 @@ router.get('/:id', (req, res) => {
   controller.find(model, req, res)
 })
 
+router.get('/:id/roles', (req, res) => {
+  console.log('info utilisateur')
+  controller.find(model, req, res)
+})
+
 router.put('/:id', (req, res) => {
   console.log('info utilisateur')
   controller.update(model, req, res)

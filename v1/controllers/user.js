@@ -2,14 +2,8 @@
 const mongoose = require("mongoose");
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
+const argon2 = require("argon2")
 
-const {
-  argon2i
-} = require("argon2-ffi");
-const crypto = require("crypto");
-const util = require("util");
-
-const getRandomBytes = util.promisify(crypto.randomBytes);
 
 exports.signup = (req, res) => {
   return new Promise((resolve, reject) => {
@@ -28,9 +22,9 @@ exports.signup = (req, res) => {
         errors.push("email error format");
       } else if (!req.body.password && !req.body.password.length >= 8) {
         errors.push("password error format");
-      } else if (!req.body.confirm) {
+      } else if (!req.body.confirmation) {
         errors.push("require confirmation password");
-      } else if (req.body.confirm != req.body.password) {
+      } else if (req.body.confirmation != req.body.password) {
         errors.push("password and confirmation do not match");
       } else {
         console.log("signup parameters ok");
@@ -77,9 +71,7 @@ exports.signup = (req, res) => {
     })
     .then(() => {
       // hashage du mot de passe
-      return getRandomBytes(32).then((salt) => {
-        return argon2i.hash(req.body.password, salt);
-      });
+      return argon2.hash(req.body.password);
     })
     .then((hashedPassword) => {
       // on enregistre l'utilisateur dans la bdd
@@ -149,7 +141,8 @@ exports.login = (req, res) => {
           ),
           isPasswordError: !(req.body.password && req.body.password.length >= 8),
         };
-        if (!verification.isEmailError && !verification.isPasswordError) {
+        // if (!verification.isEmailError && !verification.isPasswordError) {
+        if (true) {
           resolve(true);
         } else {
           reject(["email or password bad format"]);
@@ -179,7 +172,7 @@ exports.login = (req, res) => {
       // on verifie que le mot de passe correspond bien
       // return bcrypt.compare(req.body.password, account.password);
       const password = Buffer.from(req.body.password);
-      return argon2i.verify(account.password, password).then((isCorrect) => {
+      return argon2.verify(account.password, password).then((isCorrect) => {
         if (isCorrect) {
           return new Promise((resolve, reject) => {
             console.log("Connection de: " + account.username);
@@ -190,17 +183,18 @@ exports.login = (req, res) => {
             );
             let user = {
               username: account.username,
-              email: account.email,
-              token: token,
+              email: account.email
             };
             if (!req.session.user) {
               req.session.user = res.locals.user = user;
+              req.session.token = res.locals.token = token;
             }
 
             res.send(
               JSON.stringify({
                 success: true,
-                user: user
+                user: user,
+                token: token
               })
             );
             resolve(account)

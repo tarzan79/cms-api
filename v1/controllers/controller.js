@@ -1,17 +1,21 @@
 const mongoose = require("mongoose");
-
+const db = require('../../lib/db');
+let typeNode = new Map()
 
 exports.create = (model, req, res) => {
     const newTodoObj = new mongoose.models[model](req.body);
     newTodoObj.save(err => {
-        if (err) return res.status(500).send(err);
+        if (err) {
+            console.log(err)
+            return res.status(500).json(err);
+        }
         return res.status(200).send(newTodoObj);
     });
 }
 
 exports.find = (model, req, res) => {
     console.log(model);
-    let query = req.body || {};
+    let query = req.query || {};
     mongoose.models[model].find(query, (err, data) => {
         if (err) return res.status(500).send(err)
         return res.status(200).send(data);

@@ -7,6 +7,4 @@ router.post('/auth', (req, res) => {
   controllerUser.login(req, res);
 });
 
-
-
 module.exports = router;

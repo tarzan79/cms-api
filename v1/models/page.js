@@ -1,7 +1,8 @@
-const db = require('../lib/db');
+const db = require('../../lib/db');
 
 const PageSchema = new db.Schema({
     title: { type: String, required: true },
+    formatedTitle: { type: String, required: true },
     description: { type: String },
     content: { type: String, required: true },
     author: { type: String, required: true },

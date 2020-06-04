@@ -1,4 +1,4 @@
-const db = require('../lib/db');
+const db = require('../../lib/db');
 
 const ServiceSchema = new db.Schema({
     name: { type: String, required: true },

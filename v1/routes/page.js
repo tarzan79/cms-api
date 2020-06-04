@@ -14,6 +14,8 @@ router.post('/search', (req, res) => { // find with params
   controller.findOne(model, req, res);
 });
 router.post('/', (req, res) => { // create
+  console.log("creer une page")
+  console.log(req.body)
   controller.create(model, req, res);
 });
 router.put('/:id', (req, res) => { // update
