@@ -84,5 +84,4 @@ let verifToken = (req, res, next) => {
 let verifPermissions = (user, action, model) => {
   let roles = ["visiteur", "inscrit", "redacteur", "moderateur", "admin", "dev", "dieu"];
   let role = req.session.user.role;
-
 };

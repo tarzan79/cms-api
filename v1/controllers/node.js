@@ -9,6 +9,8 @@ exports.create = (model, req, res) => {
     console.log("model: " + model)
     req.body.formatedName = "node_" + req.body.formatedName
     const newTodoObj = new mongoose.models[model](req.body);
+    console.log("create model machin chose")
+    console.log(req.body.model)
     newTodoObj.save(err => {
         if (err) {
             console.log(err)
@@ -76,10 +78,14 @@ exports.checkModel = (name) => {
 }
 
 exports.createModel = (name, schema) => {
+    console.log(schema.to_json)
     let json = JSON.parse(schema);
-    const NodeSchema = new db.Schema(generator.convert(json));
+    console.log('schema ==> ')
+    console.log(typeof json)
+    console.log(json)
+    //const NodeSchema = new db.Schema(generator.convert(json.properties));
     console.log("name: " + name)
-    return db.model(name, NodeSchema);
+    //return db.model(name, NodeSchema);
 }
 
 exports.init = async () => {

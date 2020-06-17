@@ -35,7 +35,8 @@ app.use(cors());
 const init = async () => {
   let route = require("./v1/routes/index")(app); // c'est la qu'on charge les routes de l'api
   let init = require('./v1/controllers/node')
-  init.init()
+  
+  //init.init()
 
   let port = app.config.server.port || 5000
   let host = app.config.server.host || "0.0.0.0"
